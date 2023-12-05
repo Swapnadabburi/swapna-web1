@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Drag and Drop Game</title>
+  <style>
+    /* CSS styling for the background */
+    body {
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* CSS styling for the header */
+    .header {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+    }
+
+    /* CSS styling for the game container */
+    .game-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    /* CSS styling for the draggable items */
+    .draggable-item {
+      width: 80px;
+      height: 80px;
+      background-color: #fff;
+      border: 2px solid #333;
+      border-radius: 5px;
+      margin: 10px;
+      cursor: move;
+    }
+
+    /* CSS styling for the game score */
+    .game-score {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 24px;
+    }
+
+    /* CSS styling for the footer */
+    .footer {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Drag and Drop Game</h1>
+  </div>
+
+  <div class="game-container">
+    <div class="draggable-item" draggable="true"></div>
+    <div class="draggable-item" draggable="true"></div>
+    <div class="draggable-item" draggable="true"></div>
+    <div class="draggable-item" draggable="true"></div>
+    <!-- Add more draggable items here -->
+  </div>
+
+  <div class="game-score">
+    Score: <span id="score">0</span>
+  </div>
+
+  <div class="footer">
+    <p>Drag and drop the items to play the game.</p>
+  </div>
+
+  <script>
+    // JavaScript code for the drag and drop game
+    var score = 0;
+    var draggableItems = document.getElementsByClassName('draggable-item');
+    var scoreElement = document.getElementById('score');
+
+    // Add event listeners for drag and drop events
+    for (var i = 0; i < draggableItems.length; i++) {
+      var item = draggableItems[i];
+      item.addEventListener('dragstart', dragStart);
+      item.addEventListener('dragover', dragOver);
+      item.addEventListener('drop', dragDrop);
+    }
+
+    function dragStart(event) {
+      event.dataTransfer.setData("text/plain", event.target.id);
+    }
+
+    function dragOver(event) {
+      event.preventDefault();
+    }
+
+    function dragDrop(event) {
+      event.preventDefault();
+      var data = event.dataTransfer.getData("text/plain");
+      var draggedItem = document.getElementById(data);
+
+      // Increment score when item is dropped
+      score++;
+      scoreElement.innerHTML = score;
+
+      // Remove the item from the game container
+      draggedItem.remove();
+    }
+  </script>
+</body>
+</html>
